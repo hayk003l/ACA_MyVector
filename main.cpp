@@ -13,8 +13,23 @@ int main() {
     vec.push_back(5);
     vec.push_back(5);
     vec.push_back(5);
-    vec.push_back(5);
-    vec.push_back(5);
-    std::cout << vec[0] << std::endl;
-    std::cout << vec[15] << std::endl;
+    vec.push_back(5);    
+    vec.push_back(5);    
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    vec.push_front(1);
+    std::cout << vec.getCap() << std::endl;
+    return 0;
 }
