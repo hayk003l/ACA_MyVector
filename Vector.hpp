@@ -11,6 +11,9 @@ namespace myStl {
                 _ptr[i] = 0;
             }
         }
+        Vector(std::initializer_list<T> vec) : _size(vec.size()), _cap(_size * 2), _ptr(new T[_cap]) {
+            std::copy(vec.begin(), vec.end(), this->_ptr);
+        }
         Vector() : _ptr(new T[_cap]) {}
         ~Vector() {
             delete[] _ptr;
