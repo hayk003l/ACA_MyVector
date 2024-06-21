@@ -1,13 +1,14 @@
 #ifndef __VECTOR__
 #define __VECTOR__
 #include <iostream>
+#include <algorithm>
 
 namespace myStl {
     template <typename T>
     class Vector {
     public:
-        Vector(const int& size) : _cap(size * 2), _ptr(new T[_cap]) {
-            for (int i = 0; i < _cap; ++i) {
+        Vector(const int& size) : _size(size), _cap(size * 2), _ptr(new T[_cap]) {
+            for (int i = 0; i < _size; ++i) {
                 _ptr[i] = 0;
             }
         }
@@ -30,20 +31,24 @@ namespace myStl {
             return _ptr[index];
             
         }
+    private:
+        void largerCap() {
+            _cap *= 2;
+            T* temp = new T[_cap];
+            for (int i = 0; i < _size; ++i) {
+                temp[i] = _ptr[i];
+            }
+            for (int i = _size; i < _cap; ++i) {
+                temp[i] = 0;
+            }
+            delete[] _ptr;
+            _ptr = temp;
+            temp = nullptr;
+        }
     public:
         void push_back(const T& elem) {
             if (_size >= _cap) {
-                _cap *= 2;
-                T* temp = new T[_cap];
-                for (int i = 0; i < _size; ++i) {
-                    temp[i] = _ptr[i];
-                }
-                for (int i = _size; i < _cap; ++i) {
-                    temp[i] = 0;
-                }
-                delete[] _ptr;
-                _ptr = temp;
-                temp = nullptr;
+                largerCap();
             }
             _ptr[_size++] = elem;
         }
@@ -59,17 +64,7 @@ namespace myStl {
 
         void push_front(const T& elem) {
             if (_size >= _cap) {
-                _cap *= 2;
-                T* temp = new T[_cap];
-                for (int i = 0; i < _size; ++i) {
-                    temp[i] = _ptr[i];
-                }
-                for (int i = _size; i < _cap; ++i) {
-                    temp[i] = 0;
-                }
-                delete[] _ptr;
-                _ptr = temp;
-                temp = nullptr;
+                largerCap();
             }
             for (int i = 0; i < _size; ++i) {
                 _ptr[i + 1] = _ptr[i];
@@ -91,17 +86,7 @@ namespace myStl {
             }
             else {
                 if (index == _cap || _size == _cap) {
-                    _cap *= 2;
-                    T* temp = new T[_cap];
-                    for (int i = 0; i < _size; ++i) {
-                        temp[i] = _ptr[i];
-                    }
-                    for (int i = _size; i < _cap; ++i) {
-                        temp[i] = 0;
-                    }
-                    delete[] _ptr;
-                    _ptr = temp;
-                    temp = nullptr;
+                    largerCap();
                 }
                 if (index > _size) {
                     _ptr[index] = val;
@@ -115,6 +100,42 @@ namespace myStl {
                     ++_size;
                 }
             }
+        }
+
+        void printVec() {
+            for (int i = 0; i < _size; ++i) {
+                std::cout << _ptr[i] << " ";
+            }
+        }
+
+        void resize(const int& count) {
+            if (count <= _size) {
+                return;
+            }
+            else if (count >= _cap) {
+                largerCap();
+            }
+            for (int i = _size; i < _cap; ++i) {
+                _ptr[i] = 0;
+            }
+            _size = count;
+        }
+
+        void reserve(const int& newCap) {
+            if (newCap <= _cap) {
+                return;
+            }
+            _cap = newCap;
+            T* temp = new T[_cap];
+            for (int i = 0; i < _size; ++i) {
+                temp[i] = _ptr[i];
+            }
+            for (int i = _size; i < _cap; ++i) {
+                temp[i] = 0;
+            }
+            delete[] _ptr;
+            _ptr = temp;
+            temp = nullptr;
         }
 
         int getSize() const {
