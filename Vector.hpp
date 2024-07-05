@@ -21,15 +21,7 @@ namespace myStl {
             _ptr = nullptr;
         }
         T& operator[](const int& index) {
-            try {
-                if (index < 0 || index > _cap) {}
-            }
-            catch(const std::exception& e) {
-                std::cerr << e.what() << '\n';
-
-            }
             return _ptr[index];
-            
         }
     private:
         void largerCap() {
@@ -46,6 +38,19 @@ namespace myStl {
             temp = nullptr;
         }
     public:
+        T& at(const int& index) {
+            try {
+                if (index < 0 || index > _cap) {
+                    throw std::out_of_range("Error! Your index is out of range.");
+                }
+            }
+            catch(const std::out_of_range& e) {
+                std::cerr << e.what() << std::endl;
+
+            }
+            return _ptr[index];
+        }
+
         void push_back(const T& elem) {
             if (_size >= _cap) {
                 largerCap();
@@ -137,6 +142,7 @@ namespace myStl {
             _ptr = temp;
             temp = nullptr;
         }
+        
 
         int getSize() const {
             return _size;

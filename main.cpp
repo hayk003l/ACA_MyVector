@@ -15,16 +15,7 @@ int main() {
     vec[7] = 4;
     vec[8] = 1;
 
-    vec.printVec();
-    
-    std::cout << std::endl;
-
-    vec.resize(20);
-
-    vec.printVec();
-    std::cout << std::endl;
-
-    vec.reserve(50);
+    std::cout << vec.at(30) << std::endl;
 
     return 0;
 }
