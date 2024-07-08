@@ -2,6 +2,7 @@
 #define __VECTOR__
 #include <iostream>
 #include <algorithm>
+// #include "Exception.hpp"
 
 namespace myStl {
     template <typename T>
@@ -39,14 +40,8 @@ namespace myStl {
         }
     public:
         T& at(const int& index) {
-            try {
-                if (index < 0 || index > _cap) {
-                    throw std::out_of_range("Error! Your index is out of range.");
-                }
-            }
-            catch(const std::out_of_range& e) {
-                std::cerr << e.what() << std::endl;
-
+            if (index < 0 || index > _cap) {
+                throw std::out_of_range("Error! Your index is out of range.");
             }
             return _ptr[index];
         }
@@ -87,7 +82,7 @@ namespace myStl {
 
         void insert(const int& index, const T& val) {
             if (index < 0 || index > _cap) {
-                std::cout << "Error. Wrong operation." << std::endl;
+                throw MyException("Error! Wrong operation.");
             }
             else {
                 if (index == _cap || _size == _cap) {

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Vector.hpp"
-
+#include "Exception.hpp"
 
 
 int main() {
@@ -15,7 +15,20 @@ int main() {
     vec[7] = 4;
     vec[8] = 1;
 
-    std::cout << vec.at(30) << std::endl;
+    try {
+        std::cout << vec.at(30) << std::endl;
+    }
+    catch (const std::out_of_range& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    
+    try {
+       vec.insert(3, 300);
+    }
+    catch (const MyException& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
 
     return 0;
 }
