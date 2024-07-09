@@ -5,6 +5,19 @@
 // #include "Exception.hpp"
 
 namespace myStl {
+    
+    class MyException : public std::exception {
+    public:
+        MyException(const std::string message) : _message(message) {}
+        ~MyException() {}
+
+        const char* what() const noexcept override {
+            return _message.c_str();
+        }
+    private:
+        std::string _message;
+    };
+
     template <typename T>
     class Vector {
     public:

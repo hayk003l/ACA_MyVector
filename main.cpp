@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Vector.hpp"
-#include "Exception.hpp"
 
 
 int main() {
@@ -23,9 +22,9 @@ int main() {
     }
     
     try {
-       vec.insert(3, 300);
+       vec.insert(300, 300);
     }
-    catch (const MyException& e) {
+    catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
